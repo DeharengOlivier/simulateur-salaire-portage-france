@@ -7,3 +7,7 @@
 /portage/tax.py @DeharengOlivier
 /pyproject.toml @DeharengOlivier
 /uv.lock @DeharengOlivier
+
+/portage/advisory.py @DeharengOlivier
+/portage/atelier.py @DeharengOlivier
+/portage/terminal.py @DeharengOlivier

@@ -3,6 +3,9 @@
 ## Trust boundaries
 
 - User input: CLI arguments and a local TOML profile. Values are finite, bounded, validated.
+- Optional atelier: local curses screen and bounded 32-character keyboard editing; no browser,
+  server, mouse capture, shared session or persistence. It reuses the same Decimal engine.
+  Indicators depend on user declarations and contract parameters, never an Urssaf audit score.
 - Output: terminal/JSON, deliberately contains the user's supplied financial assumptions.
 - Runtime: Python standard library only; no network, subprocess, remote URL, authentication,
   database, automatic persistence, upload or transaction. `profil` alone creates a file,

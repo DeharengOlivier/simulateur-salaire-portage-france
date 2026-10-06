@@ -36,7 +36,7 @@ engine validation, human acceptance and the applicable human pentest. It is not 
 | Platform branch protection | PASS | GitHub protection GET 2026-10-06: strict quality + independent-review checks, PR required, CODEOWNERS for sensitive paths, enforce_admins=true, no force/deletion, conversation resolution |
 | Hosted CI executed | PASS | [Run 37452500060](https://github.com/DeharengOlivier/simulateur-salaire-portage-france/actions/runs/37452500060), all applicable steps successful on 05a99b9; final head must also pass checks |
 | Build / install / reinstall | PASS | uv build --no-build-isolation; isolated /tmp venv installed and reinstalled wheel, version and bulletin smoke passed; two builds with fixed SOURCE_DATE_EPOCH yielded identical hashes |
-| Services / UI / DB / queues / load / alerts / backups | NOT_APPLICABLE | No hosted service, UI, persistence or automated high-impact operation; user profiles are unmanaged local files |
+| Services / UI / DB / queues / load / alerts / backups | NOT_APPLICABLE | No hosted service, browser UI, persistence or automated high-impact operation; user profiles are unmanaged local files |
 
 ## 3. Security control evidence
 
@@ -109,3 +109,27 @@ for nonsensitive files because L2 permits recorded agent review. CODEOWNERS appr
 for CI, security policy, dependency manifests and calculation/input-boundary modules. The
 maintainer must not manufacture a successful review status without an actual independent review.
 This does not claim two-person human approval of the initial code or a human pentest.
+
+## Atelier terminal — 2026-10-06 (change pending release)
+
+Scope stays L2: optional local curses UI, macOS/Linux and WSL, no HTTP/browser or network.
+The terminal is an additional input/output surface, not a web session. No new dependencies,
+credentials or persisted records. Existing server/browser N/A decisions remain applicable.
+Owner Olivier Dehareng; reassess on release and input/calculation changes.
+
+| Control | Priority | Status | Evidence |
+|---|---|---|---|
+| SEC-GOV-01, SEC-01-001..007 | P0 | PASS | AGENTS/SECURITY updated for bounded terminal input and transient output |
+| SEC-07-001..005, SEC-22-INVARIANTS | P0 | PASS | Workshop validates via Decimal/Scenario; immutable refused edits; input fuzz; entry limited to 32 characters |
+| SEC-08-003, SEC-08-006, SEC-12-010 | P0 | PASS | No shell or eval; architecture test; safe ValueError display; imports constrained |
+| SEC-17-010, SEC-17-013, SEC-17-016 | P0/P1 | PASS | Synthetic tests only; financial screen is explicitly requested; no recording or logs |
+| SEC-19-002 | P0 | PASS | Impossible budget, target, invalid input, missing curses/non-TTY and resize paths tested; wrapper restores terminal |
+| SEC-22-EXPLORE | P1 | PASS | Real macOS PTY journey: edit TJM, switch control, solve, inspect help, quit; automated PTY journey retained |
+| Critical arithmetic / UI journey | required L2 | PASS | Same engine, inverse minimality regression, all three added modules 100% branch coverage; 77 tests locally |
+| Supported layouts | required L2 | PASS | 80×24 / 120×40 rendering and small-terminal refusal; help scrolls, keyboard-only interaction |
+| Independent review / final CI / required owner approval | required L2 | NOT_VERIFIED | Pending reviewed PR; new sensitive paths added to CODEOWNERS |
+
+Release remains BLOCKED until final-head CI, independent review and required CODEOWNERS
+approval are confirmed. This records the publication gate, not an observed exploit. No human
+pentest or legal validation is claimed. Stopping the atelier clears the transient display and
+restores the terminal; returning to v0.1.0 removes the feature without changing user profiles.

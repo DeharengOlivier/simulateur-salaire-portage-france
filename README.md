@@ -19,6 +19,56 @@ Ou depuis le dépôt cloné, sans installation ni dépendance :
 python3 -m portage simuler --jours 22 --tjm 500 --frais 600
 ```
 
+## Atelier avec curseurs
+
+```sh
+portage atelier --jours 22 --net 4000
+# Avec vos hypothèses enregistrées :
+portage atelier --profil portage.local.toml --net 4000 --frais-justifies 600
+```
+
+Un écran **dans le terminal**, macOS/Linux (Windows via WSL), au minimum 80 colonnes × 24 lignes.
+Les exemples et taux par défaut restent fictifs. Le mois et le profil se choisissent au lancement.
+Aucun serveur, navigateur, enregistrement ni échange réseau.
+
+- **↑ / ↓ / Tab** : choisir TJM, jours, frais, objectif ou un autre paramètre.
+- **← / →** : déplacer le curseur ; **+ / −** : ajuster au centime (jours et titres gardent leur pas).
+- **Entrée** : saisir une valeur exacte, virgule acceptée ; Échap annule la saisie.
+- **A** : enlever un plafond optionnel, revenir au PAS neutre ou laisser les justificatifs inconnus.
+- **F** : appliquer le minimum mathématique de frais atteignant le virement cible, sous les
+  contraintes configurées. Un objectif inaccessible est refusé et laisse le scénario inchangé.
+- **H** : lire tous les repères et leurs limites, avec ↑ / ↓ pour défiler ; **Q** : quitter.
+
+L'objectif est le **total viré après PAS, remboursements inclus**. L'écran sépare le salaire hors
+remboursements et les remboursements. Le curseur a une échelle visuelle adaptative ; les bornes
+réelles restent celles du modèle. Les calculs appellent exactement `simulate` et `target_expenses`,
+sans réimplémentation ni flottants dans l'interface. Les changements ne sont pas sauvegardés.
+
+### Repères de vigilance, pas de score URSSAF
+
+`--frais-justifies` désigne uniquement le montant **non refacturé**, réellement professionnel et
+justifié, que vous déclarez. Ce n'est pas un contrôle de factures. L'atelier distingue :
+
+- **ROUGE** : les frais simulés dépassent ce montant déclaré, le plafond contractuel configuré
+  est dépassé, ou le brut est inférieur au minimum mensuel configuré.
+- **VIGILANCE** : justificatifs, plafond ou minimum manquants, ou autres indemnités à vérifier.
+- **INFO** : les frais entrent dans le montant déclaré ; aucune conformité n'est certifiée.
+
+Un scénario contractuellement hors limite reste visible pour comprendre l'effet des curseurs,
+avec une alerte. Un budget impossible ne produit aucun résultat. Le solveur **F** respecte les
+plafonds/minimums mais ne crée pas de dépenses admissibles : vérifier les repères après son calcul.
+
+Il n'y a pas de pourcentage présenté comme « sous ce seuil, pas de contrôle ». Les ratios ne
+permettent pas d'estimer une probabilité de contrôle. L'Urssaf distingue les dépenses réelles sur
+justificatifs et les allocations forfaitaires avec leurs conditions propres : un plafond
+contractuel n'est pas un plafond légal universel, et le dépassement d'un forfait n'est pas à lui
+seul une qualification de fraude. Les dépenses personnelles, les pièces manquantes et les doubles
+remboursements doivent être examinés avec l'employeur. Les barèmes détaillés par catégorie ne sont
+pas automatisés ici.
+
+Sources officielles consultées le 6 octobre 2026 : [frais professionnels Urssaf](https://www.urssaf.fr/accueil/employeur/beneficier-exonerations/frais-professionnels.html),
+[barèmes et conditions des forfaits](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/frais-professionnels.html).
+
 ## Trois commandes utiles
 
 ### 1. Calculer un mois

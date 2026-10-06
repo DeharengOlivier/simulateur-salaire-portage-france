@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Atelier terminal avec curseurs TJM, jours, frais, commission et paramètres du modèle.
+- Objectif de virement, salaire hors remboursements séparé, saisie exacte et ajustement au centime.
+- Repères documentés : justificatifs déclarés, plafonds contractuels et minimum brut ; aucun score de contrôle Urssaf.
+- Tests de parcours clavier, vrais pseudo-terminaux et écrans 80×24 / 120×40 / trop petits.
+
 ## 0.1.0 — 2026-10-06
 
 - CLI français : simulation, objectif net, reconstitution de bulletin et profils TOML.
