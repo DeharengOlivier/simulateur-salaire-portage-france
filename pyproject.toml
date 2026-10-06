@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling==1.30.1"]
+build-backend = "hatchling.build"
+
+[project]
+name = "simulateur-salaire-portage-france"
+version = "0.1.0"
+description = "CLI de simulation de portage salarial, calcul décimal et rapprochement de bulletin"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{name = "Olivier Dehareng"}]
+dependencies = []
+
+[project.scripts]
+portage = "portage.cli:main"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "hypothesis",
+    "pip-audit",
+    "hatchling==1.30.1",
+    "diff-cover>=10.6.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["portage"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S603"]
+
+[tool.mypy]
+strict = true
+files = ["portage"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=portage --cov-branch --cov-report=term-missing --cov-fail-under=90"
