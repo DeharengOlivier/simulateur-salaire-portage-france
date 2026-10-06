@@ -125,7 +125,7 @@ Owner Olivier Dehareng; reassess on release and input/calculation changes.
 | SEC-17-010, SEC-17-013, SEC-17-016 | P0/P1 | PASS | Synthetic tests only; financial screen is explicitly requested; no recording or logs |
 | SEC-19-002 | P0 | PASS | Impossible budget, target, invalid input, missing curses/non-TTY and resize paths tested; wrapper restores terminal |
 | SEC-22-EXPLORE | P1 | PASS | Real macOS PTY journey: edit TJM, switch control, solve, inspect help, quit; automated PTY journey retained |
-| Critical arithmetic / UI journey | required L2 | PASS | Same engine, inverse minimality regression, all three added modules 100% branch coverage; 77 tests locally |
+| Critical arithmetic / UI journey | required L2 | PASS | Same engine, inverse minimality regression, all three added modules 100% branch coverage; 79 tests locally |
 | Supported layouts | required L2 | PASS | 80×24 / 120×40 rendering and small-terminal refusal; help scrolls, keyboard-only interaction |
 | Independent review / final CI / required owner approval | required L2 | NOT_VERIFIED | Pending reviewed PR; new sensitive paths added to CODEOWNERS |
 
@@ -133,3 +133,7 @@ Release remains BLOCKED until final-head CI, independent review and required COD
 approval are confirmed. This records the publication gate, not an observed exploit. No human
 pentest or legal validation is claimed. Stopping the atelier clears the transient display and
 restores the terminal; returning to v0.1.0 removes the feature without changing user profiles.
+
+Targeted mutation checks: three isolated mutants killed (justification boundary, inverse-result
+centime, fine-adjustment increment). Independent review identified two display defects;
+regressions now cover lossless rate display and explicit multi-alert overflow at 80×24.

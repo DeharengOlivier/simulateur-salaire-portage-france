@@ -16,6 +16,12 @@ def display(value: Decimal | None) -> str:
     return "aucun" if value is None else f"{value:,.2f}".replace(",", " ").replace(".", ",")
 
 
+def control_display(value: Decimal | None) -> str:
+    if value is None:
+        return "aucun"
+    return f"{value:,.6f}".rstrip("0").rstrip(".").replace(",", " ").replace(".", ",")
+
+
 def write(screen: "curses.window", row: int, col: int, text: str, attr: int = 0) -> None:
     height, width = screen.getmaxyx()
     if 0 <= row < height and 0 <= col < width - 1:
@@ -81,7 +87,7 @@ def draw(
     write(screen, 3, 0, "PARAMÈTRES  ↑↓ / Tab", curses.A_BOLD)
     first = max(0, min(state.selected - 3, len(CONTROLS) - 7))
     for index, item in enumerate(CONTROLS[first : first + 7], first):
-        label = f"{item.label[:24]:24} {display(state.value(item)):>9}"
+        label = f"{item.label[:24]:24} {control_display(state.value(item)):>9}"
         write(
             screen,
             4 + index - first,
@@ -128,19 +134,33 @@ def draw(
         write(screen, 5, 42, "CALCUL IMPOSSIBLE", curses.A_BOLD)
         alerts = [("ROUGE", str(exc))]
     alerts.sort(key=lambda alert: {"ROUGE": 0, "VIGILANCE": 1, "INFO": 2}[alert[0]])
+    red_count = sum(level == "ROUGE" for level, _ in alerts)
+    warning_count = sum(level == "VIGILANCE" for level, _ in alerts)
     write(
         screen,
         16,
         0,
-        f"REPÈRES / {len(alerts)} point(s) · H : explications · aucun seuil de suspicion",
+        f"REPÈRES : {red_count} ROUGE · {warning_count} VIGILANCE · H : toutes les alertes",
         curses.A_BOLD,
     )
-    row = 17
-    for level, message in alerts:
-        for line in textwrap.wrap(f"{level} — {message}", width - 2):
-            if row < height - 4:
-                write(screen, row, 0, line, curses.A_BOLD if level == "ROUGE" else 0)
-                row += 1
+    alert_lines = [
+        (level, line)
+        for level, message in alerts
+        for line in textwrap.wrap(f"{level} — {message}", width - 2)
+    ]
+    available_lines = height - 21
+    overflow = len(alert_lines) > available_lines
+    visible_lines = available_lines - int(overflow)
+    for row, (level, line) in enumerate(alert_lines[:visible_lines], 17):
+        write(screen, row, 0, line, curses.A_BOLD if level == "ROUGE" else 0)
+    if overflow:
+        write(
+            screen,
+            height - 5,
+            0,
+            "… Suite masquée : H pour lire TOUTES les alertes.",
+            curses.A_BOLD,
+        )
     status_lines = textwrap.wrap(state.status, width - 2)
     for offset, line in enumerate(status_lines[:2]):
         write(screen, height - 4 + offset, 0, line)

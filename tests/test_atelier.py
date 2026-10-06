@@ -261,3 +261,33 @@ def test_real_terminal_subprocess() -> None:
             process.wait(timeout=2)
         os.close(master)
         os.close(slave)
+
+
+def test_precise_control_values_remain_visible() -> None:
+    from portage.terminal import control_display
+
+    state = Workshop(Scenario(tjm=D("50000"), gestion=D("0.004")))
+    screen: Any = Screen()
+    draw(screen, state)
+    assert "0,004" in screen.lines[9]
+    assert state.snapshot()[0]["gestion"] == D("40.00")
+    assert control_display(D("0.000001")) == "0,000001"
+    assert control_display(D("1000000")) == "1 000 000"
+    assert control_display(None) == "aucun"
+
+
+def test_all_red_alerts_are_discoverable_at_minimum_size() -> None:
+    scenario = Scenario(
+        frais=D("500"), plafond_frais=D("1"), brut_minimum=D("10000"), teletravail=D("1")
+    )
+    state = Workshop(scenario, justified=D("0"))
+    screen: Any = Screen()
+    draw(screen, state)
+    assert "3 ROUGE" in screen.lines[16]
+    assert "Suite masquée" in screen.lines[19]
+    assert "TOUTES les alertes" in screen.lines[19]
+    draw(screen, state, help_page=True)
+    text = "\n".join(screen.lines.values())
+    assert "justifiées déclarées" in text
+    assert "Plafond contractuel" in text
+    assert "minimum mensuel" in text
