@@ -35,7 +35,7 @@ jobs:
           uv run pip-audit --disable-pip --no-deps -r /tmp/portage-requirements.txt
       - name: Build and smoke test the wheel
         run: |
-          uv build
+          uv build --no-build-isolation
           uv venv /tmp/portage-wheel
           uv pip install --python /tmp/portage-wheel/bin/python dist/*.whl
           cd /tmp

@@ -103,7 +103,7 @@ uv run mypy
 uv run pytest
 uv export --frozen --no-emit-project --format requirements-txt -o /tmp/portage-requirements.txt
 uv run pip-audit --disable-pip --no-deps -r /tmp/portage-requirements.txt
-uv build
+uv build --no-build-isolation
 ```
 
 La version Python de développement est fixée dans `.python-version`, les dépendances de développement dans `uv.lock`. Aucune dépendance d'exécution. Tests de propriétés, limites PAS, conservation du budget, objectif minimal, entrées invalides et parcours CLI. CI sur runners GitHub éphémères, jeton en lecture seule.

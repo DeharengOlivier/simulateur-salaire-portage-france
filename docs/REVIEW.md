@@ -34,3 +34,11 @@ production or this working tree), each with a 30-second timeout. All five were k
 All normal tests then pass. Monetary boundary, independent hand calculation and brute-force
 small-budget oracle tests substantiate the target algorithm; tests do not establish completeness
 of French payroll rules.
+
+## Final review follow-up
+
+Both runtime fixes were independently verified; 65 tests passed in the reviewer's run.
+The reviewer approved runtime changes and identified one release-build issue: isolated
+`uv build` did not honor transitive build dependencies from uv.lock. Changed both CI and
+the documented command to `uv build --no-build-isolation`, after frozen installation
+of the locked build backend and dependencies. Remote controls remain separately verified.
