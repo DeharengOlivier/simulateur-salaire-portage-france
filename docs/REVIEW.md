@@ -52,5 +52,7 @@ GitHub protection was read back before public publication; details are in READIN
 Independent agent `review_portage` reviewed the delta from a1403a2. It independently ran
 77 tests and found two P2 defects: six-decimal rates displayed with two decimals, and hidden
 red alerts at 80×24. Both were reproduced and corrected with explicit regressions. The
-subsequent suite has 79 tests; arithmetic still uses the original engine. Re-review and final
-CI are pending; no owner approval or human pentest is claimed.
+subsequent suite has 79 tests; arithmetic still uses the original engine. The agent approved
+2d1281c52b020fbe20b395229ae1b5b3fee612ab after independently running 34 focused tests including
+the real PTY journey. Final CI and the platform merge requirements remain to be confirmed;
+no human approval or human pentest is claimed.

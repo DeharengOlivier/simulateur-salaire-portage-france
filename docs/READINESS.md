@@ -127,7 +127,8 @@ Owner Olivier Dehareng; reassess on release and input/calculation changes.
 | SEC-22-EXPLORE | P1 | PASS | Real macOS PTY journey: edit TJM, switch control, solve, inspect help, quit; automated PTY journey retained |
 | Critical arithmetic / UI journey | required L2 | PASS | Same engine, inverse minimality regression, all three added modules 100% branch coverage; 79 tests locally |
 | Supported layouts | required L2 | PASS | 80×24 / 120×40 rendering and small-terminal refusal; help scrolls, keyboard-only interaction |
-| Independent review / final CI / required owner approval | required L2 | NOT_VERIFIED | Pending reviewed PR; new sensitive paths added to CODEOWNERS |
+| Independent review | required L2 | PASS | review_portage approved 2d1281c after 34 independent focused tests; both P2 display findings fixed |
+| Final CI / required owner approval | required L2 | NOT_VERIFIED | PR #5; new sensitive paths added to CODEOWNERS; platform requirements still pending |
 
 Release remains BLOCKED until final-head CI, independent review and required CODEOWNERS
 approval are confirmed. This records the publication gate, not an observed exploit. No human
