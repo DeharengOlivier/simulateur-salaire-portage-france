@@ -287,7 +287,7 @@ def test_all_red_alerts_are_discoverable_at_minimum_size() -> None:
     assert "Suite masquée" in screen.lines[19]
     assert "TOUTES les alertes" in screen.lines[19]
     draw(screen, state, help_page=True)
-    text = "\n".join(screen.lines.values())
+    text = " ".join(" ".join(screen.lines.values()).split())
     assert "justifiées déclarées" in text
     assert "Plafond contractuel" in text
     assert "minimum mensuel" in text
