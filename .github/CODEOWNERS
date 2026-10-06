@@ -1,0 +1,9 @@
+# Security-sensitive changes require an owner's approval in addition to agent review.
+/.github/ @DeharengOlivier
+/SECURITY.md @DeharengOlivier
+/portage/cli.py @DeharengOlivier
+/portage/money.py @DeharengOlivier
+/portage/model.py @DeharengOlivier
+/portage/tax.py @DeharengOlivier
+/pyproject.toml @DeharengOlivier
+/uv.lock @DeharengOlivier
