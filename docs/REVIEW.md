@@ -42,3 +42,7 @@ The reviewer approved runtime changes and identified one release-build issue: is
 `uv build` did not honor transitive build dependencies from uv.lock. Changed both CI and
 the documented command to `uv build --no-build-isolation`, after frozen installation
 of the locked build backend and dependencies. Remote controls remain separately verified.
+
+Build correction verified locally and in hosted run 37452500060. All 65 tests pass;
+overall coverage 99.50%, model and money modules 100%. Gitleaks and dependency audit pass.
+GitHub protection was read back before public publication; details are in READINESS.md.
