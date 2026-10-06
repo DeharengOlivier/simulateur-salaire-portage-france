@@ -1,6 +1,6 @@
 # Project instructions
 
-Local CLI, Python stdlib only at runtime. French user interface. Financial **estimates**, no
+Local CLI, Python stdlib only at runtime. French user interface. Optional curses terminal UI (macOS/Linux, 80×24+), no browser or HTTP. Financial **estimates**, no
 payment or payroll submission, no network, no persisted personal data. L2 informational tool.
 Never claim payroll accuracy from Decimal alone. `bulletin` recomposes known monetary totals;
 `simuler` and `objectif` use explicitly adjustable effective rates and carry an estimate notice.
@@ -12,7 +12,8 @@ section 0 and relevant controls. Do not invent absence of applicable controls as
 - Money: Decimal, half-up cents, no floats, explicit units and aggregation assumptions.
 - No real payslips, names of customers, addresses, bank data or personal financial examples.
 - No config execution: TOML schema, bounded values, exclusive creation and no hidden writes.
-- Dependency direction: money <- tax <- model <- cli. `__main__` imports cli only.
+- Dependency direction: money <- tax <- model; advisory and atelier depend on model;
+  terminal depends on atelier; cli may launch terminal lazily. `__main__` imports cli only.
 - Check: `uv sync --frozen`, `uv run ruff check .`, `uv run ruff format --check .`,
   `uv run mypy`, `uv run pytest`, dependency audit documented in README, `uv build`.
 - Changes through PR, protected main, independent review. Bootstrap import is reviewed before

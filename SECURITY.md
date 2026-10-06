@@ -3,6 +3,9 @@
 ## Trust boundaries
 
 - User input: CLI arguments and a local TOML profile. Values are finite, bounded, validated.
+- Optional atelier: local curses screen and bounded 32-character keyboard editing; no browser,
+  server, mouse capture, shared session or persistence. It reuses the same Decimal engine.
+  Indicators depend on user declarations and contract parameters, never an Urssaf audit score.
 - Output: terminal/JSON, deliberately contains the user's supplied financial assumptions.
 - Runtime: Python standard library only; no network, subprocess, remote URL, authentication,
   database, automatic persistence, upload or transaction. `profil` alone creates a file,
@@ -33,6 +36,6 @@ profiles are untouched. No hosted service, user accounts, application tokens or 
 revoke/restore. If a repository credential leaks, revoke it at GitHub immediately, rotate it,
 scan all history; deleting a commit does not revoke a credential.
 
-Supported version: latest 0.1.x. Review sources and dependencies at each release; Dependabot
+Supported version: latest 0.2.x. Review sources and dependencies at each release; Dependabot
 checks weekly. No hosted availability/on-call promise. See docs/READINESS.md for actual evidence
 and any unresolved release controls. An agent review is not a human penetration test.

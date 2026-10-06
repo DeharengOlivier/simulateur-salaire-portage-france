@@ -113,6 +113,19 @@ def build_parser() -> argparse.ArgumentParser:
     target.add_argument(
         "--net", type=parse_number, required=True, help="net viré cible après PAS (€)"
     )
+    atelier = commands.add_parser("atelier", help="curseurs interactifs TJM / frais / objectif")
+    options(atelier)
+    atelier.add_argument(
+        "--net",
+        type=parse_number,
+        default=Decimal("4000"),
+        help="objectif de virement après PAS (€)",
+    )
+    atelier.add_argument(
+        "--frais-justifies",
+        type=parse_number,
+        help="frais non refacturés réels et justifiés déclarés (€)",
+    )
     init = commands.add_parser("profil", help="écrire un profil d'exemple sans écraser un fichier")
     init.add_argument("chemin", type=Path, nargs="?", default=Path("portage.local.toml"))
     replay = commands.add_parser("bulletin", help="recomposer le net à partir des totaux connus")
@@ -205,6 +218,15 @@ def main(argv: list[str] | None = None) -> int:
         values = profile(args.profil) if args.profil else {}
         values.update({key: value for key, value in vars(args).items() if key in SCENARIO_FIELDS})
         scenario = Scenario(**values)
+        if args.command == "atelier":
+            from .terminal import launch
+
+            if args.json:
+                raise ValueError(
+                    "L'atelier est interactif ; utiliser simuler ou objectif avec --json."
+                )
+            launch(scenario, args.net, args.frais_justifies)
+            return 0
         result = (
             target_expenses(scenario, args.net)
             if args.command == "objectif"

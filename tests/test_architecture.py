@@ -10,7 +10,10 @@ def test_runtime_import_boundaries() -> None:
         "money": set(),
         "tax": {"money"},
         "model": {"money", "tax"},
-        "cli": {"", "money", "model"},
+        "cli": {"", "money", "model", "terminal"},
+        "advisory": {"model", "money"},
+        "atelier": {"model", "money", "advisory"},
+        "terminal": {"atelier", "model"},
         "__main__": {"cli"},
         "__init__": set(),
     }
@@ -24,6 +27,8 @@ def test_runtime_import_boundaries() -> None:
         "pathlib",
         "typing",
         "datetime",
+        "curses",
+        "textwrap",
     }
     for file in package.glob("*.py"):
         for node in ast.walk(ast.parse(file.read_text())):
