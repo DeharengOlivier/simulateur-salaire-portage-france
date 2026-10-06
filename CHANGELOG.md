@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 — 2026-10-06
 
 - Atelier terminal avec curseurs TJM, jours, frais, commission et paramètres du modèle.
 - Objectif de virement, salaire hors remboursements séparé, saisie exacte et ajustement au centime.

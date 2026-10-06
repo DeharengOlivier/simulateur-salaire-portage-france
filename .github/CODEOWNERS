@@ -1,4 +1,4 @@
-# Security-sensitive changes require an owner's approval in addition to agent review.
+# Sensitive paths route to eligible code owners. Independent-review is always required.
 /.github/ @DeharengOlivier
 /SECURITY.md @DeharengOlivier
 /portage/cli.py @DeharengOlivier

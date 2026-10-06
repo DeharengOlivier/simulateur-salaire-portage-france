@@ -36,6 +36,6 @@ profiles are untouched. No hosted service, user accounts, application tokens or 
 revoke/restore. If a repository credential leaks, revoke it at GitHub immediately, rotate it,
 scan all history; deleting a commit does not revoke a credential.
 
-Supported version: latest 0.1.x. Review sources and dependencies at each release; Dependabot
+Supported version: latest 0.2.x. Review sources and dependencies at each release; Dependabot
 checks weekly. No hosted availability/on-call promise. See docs/READINESS.md for actual evidence
 and any unresolved release controls. An agent review is not a human penetration test.

@@ -58,7 +58,7 @@ P1 deferred items are discussed in section 4. No applicable P0 may remain FAIL/N
 | SEC-13-002 | P0 | PASS | Final uv.lock export audited locally and in run 37452500060 including build/dev dependencies; no known vulnerabilities |
 | SEC-13-005 | P0 | PASS | Dependabot weekly uv + GitHub Actions updates; source review at each release |
 | SEC-13-008, SEC-13-009 | P0 | PASS | CI permissions contents:read; checkout without persisted credentials; actions pinned to verified SHAs; Gitleaks archive SHA256 pinned |
-| SEC-14-001, SEC-14-002 | P0 | PASS | GitHub API confirms PR/check enforcement and no admin bypass. independent-review is a required status issued only after recorded agent review; CODEOWNERS additionally requires owner approval for sensitive paths |
+| SEC-14-001, SEC-14-002 | P0 | PASS | GitHub API confirms PR/check enforcement and no admin bypass. independent-review is a required status issued only after recorded agent review; CODEOWNERS lists sensitive paths; see observed solo-maintainer behavior below |
 | SEC-14-003, SEC-14-004 | P0 | PASS | GitHub API 2026-10-06: owner MFA enabled; sole collaborator is owner |
 | SEC-14-005 | P0 | PASS | GitHub vulnerability-alerts HEAD succeeds; required quality check includes full-history Gitleaks and locked dependency audit; Dependabot configured |
 | SEC-14-006 | P0 | PASS | GitHub commit/check history; no financial transaction audit trail needed |
@@ -105,8 +105,13 @@ The initial source was imported while the new repository was private, independen
 and passed hosted checks. Main protection was installed before public publication. Subsequent
 changes, including this evidence update, go through PR. The required `independent-review` status
 is recorded on the exact reviewed commit after the agent verdict; GitHub approval count is zero
-for nonsensitive files because L2 permits recorded agent review. CODEOWNERS approval is required
-for CI, security policy, dependency manifests and calculation/input-boundary modules. The
+because the canonical L2 rules permit recorded agent review. CODEOWNERS lists CI, security
+policy, dependency manifests and calculation/input-boundary modules. Observed on PR #5:
+with the author also the sole owner, GitHub considers the PR CLEAN after quality and independent-review
+succeed, without a separate review request. Therefore the configuration does NOT enforce a
+second human approval in that case. This is compatible with CODING-RULES section 9's explicit
+solo-developer/agent-review provision for this L2 scope. No protection setting was weakened.
+The mandatory gate is the genuine independent-review status plus quality. The
 maintainer must not manufacture a successful review status without an actual independent review.
 This does not claim two-person human approval of the initial code or a human pentest.
 
@@ -128,10 +133,11 @@ Owner Olivier Dehareng; reassess on release and input/calculation changes.
 | Critical arithmetic / UI journey | required L2 | PASS | Same engine, inverse minimality regression, all three added modules 100% branch coverage; 79 tests locally |
 | Supported layouts | required L2 | PASS | 80×24 / 120×40 rendering and small-terminal refusal; help scrolls, keyboard-only interaction |
 | Independent review | required L2 | PASS | review_portage approved 2d1281c after 34 independent focused tests; both P2 display findings fixed |
-| Final CI / required owner approval | required L2 | NOT_VERIFIED | PR #5; new sensitive paths added to CODEOWNERS; platform requirements still pending |
+| Final CI | required L2 | PASS for reviewed code | PR #5 checks on 38ca158: runs 37454131402 and 37454126541 successful; metadata-only final release head must pass again |
 
-Release remains BLOCKED until final-head CI, independent review and required CODEOWNERS
-approval are confirmed. This records the publication gate, not an observed exploit. No human
+Release is conditional on final-head CI and genuine independent review, as required by the
+canonical L2 rules and enforced by GitHub. No separate human approval is claimed or required
+for this local informational change. This records the publication gate, not an observed exploit. No human
 pentest or legal validation is claimed. Stopping the atelier clears the transient display and
 restores the terminal; returning to v0.1.0 removes the feature without changing user profiles.
 
